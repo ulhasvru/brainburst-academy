@@ -3,168 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="BrainBurst Academy – Interactive Grade 4 Learning Platform">
-  <title>🌟 BrainBurst Academy – Grade 4 Learning</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <title>🌟 BrainBurst Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Basic backup styles in case style.css is missing */
+    body { font-family: 'Nunito', sans-serif; background: #f0f4f8; margin: 0; }
+    .screen { display: none; padding: 20px; }
+    .screen.active { display: block; }
+    .btn-go, .hdr-btn { cursor: pointer; padding: 10px 20px; border-radius: 8px; border: none; background: #FF9F1C; color: white; font-weight: bold; }
+    .subjects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; }
+    .subj-card { background: white; padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+  </style>
 </head>
 <body>
-<div class="bg-canvas">
-  <div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div>
-</div>
 
-<div id="confetti-layer"></div>
-<div id="toast"></div>
+<div id="toast" style="display:none; position:fixed; top:20px; right:20px; background:#333; color:white; padding:10px 20px; border-radius:8px; z-index:1000;"></div>
 
 <div class="screen active" id="screen-welcome">
-  <div class="welcome-outer">
-    <div class="welcome-card">
-      <span class="welcome-mascot">🦁</span>
-      <h1>BrainBurst Academy!</h1>
-      <p class="subtitle">Learn. Play. Level Up! 🌟</p>
-      <input class="name-input" id="student-name-input" type="text" placeholder="What's your name, Superstar? ✏️" maxlength="30" />
-      <div id="name-error" style="color:#DC2626;font-size:0.85rem;font-weight:700;margin-bottom:12px;display:none;">⚠️ Please enter your name to start!</div>
-      <button class="btn-go" onclick="startApp()">🚀 Let's Blast Off!</button>
-    </div>
+  <div style="text-align:center; margin-top:100px;">
+    <h1>🦁 BrainBurst Academy</h1>
+    <input type="text" id="student-name-input" placeholder="Your Name?" style="padding:10px; border-radius:8px; border:1px solid #ccc;">
+    <p id="name-error" style="color:red; display:none;">Please enter a name!</p>
+    <button class="btn-go" onclick="startApp()">🚀 Start!</button>
   </div>
 </div>
 
 <div class="screen" id="screen-home">
-  <div class="app-header">
-    <div class="header-logo"><span class="logo-icon">🦁</span><h2>BrainBurst Academy</h2></div>
-    <div class="hdr-right">
+  <div style="display:flex; justify-content:space-between; align-items:center; background:white; padding:10px; border-radius:12px;">
+    <h2>Hi, <span id="greeting-name"></span>!</h2>
+    <div>
       <button class="hdr-btn" style="background:#6366F1;" onclick="showAdminDashboard()">📊 Logs</button>
-      <div class="hdr-pill pill-name">👤 <span id="header-name">Explorer</span></div>
-      <div class="hdr-pill pill-score">⭐ <span id="header-score">0</span> pts</div>
-      <button class="hdr-btn" onclick="showScreen('screen-badges')">🏅 My Badges</button>
+      <button class="hdr-btn" onclick="showScreen('screen-welcome')">Logout</button>
     </div>
   </div>
-  <div class="home-content">
-    <div class="home-greeting">
-      <h2>Hey <span id="greeting-name"></span>! Ready to learn? 🎯</h2>
-    </div>
-    <div class="progress-banner" id="home-progress-banner">
-      <div class="prog-bar-outer"><div class="prog-bar-inner" id="home-prog-bar" style="width:0%"></div></div>
-      <span class="prog-count" id="home-prog-count">0 / 6 subjects</span>
-    </div>
-    <div class="subjects-grid" id="subjects-grid"></div>
-  </div>
+  <div class="subjects-grid" id="subjects-grid"></div>
 </div>
 
-<div class="screen" id="screen-subject">
-  <div class="app-header">
-    <div class="header-logo"><span class="logo-icon">🦁</span><h2>BrainBurst Academy</h2></div>
-    <div class="hdr-right"><div class="hdr-pill pill-score">⭐ <span class="dyn-score">0</span> pts</div></div>
-  </div>
-  <div class="subject-detail">
-    <button class="back-btn" onclick="showScreen('screen-home')">← Back</button>
-    <div class="subj-hero" id="subj-hero-bg">
-      <span class="hero-icon" id="hero-icon"></span>
-      <div><h2 id="hero-name"></h2><p id="hero-desc"></p></div>
-    </div>
-    <div class="choice-grid">
-      <div class="choice-card cc-read" onclick="showSyllabus()"><h3>📖 Read Syllabus</h3></div>
-      <div class="choice-card cc-quiz" onclick="startQuiz()"><h3>⚡ Jump Into Quiz</h3></div>
-    </div>
-  </div>
-</div>
-
-<div class="screen" id="screen-syllabus">
-  <div class="app-header">
-    <div class="header-logo"><span class="logo-icon">🦁</span><h2>BrainBurst Academy</h2></div>
-    <div class="hdr-right"><div class="hdr-pill pill-score">⭐ <span class="dyn-score">0</span> pts</div></div>
-  </div>
-  <div class="syllabus-content">
-    <button class="back-btn" onclick="showScreen('screen-subject')">← Back</button>
-    <h2 id="syl-title"></h2>
-    <div id="syl-body"></div>
-    <button class="quiz-launch-btn" onclick="startQuiz()">⚡ Start Quiz →</button>
+<div class="screen" id="screen-admin">
+  <button class="hdr-btn" onclick="showScreen('screen-home')">🏠 Back</button>
+  <h2>🎓 Student Performance Logs</h2>
+  <input type="text" id="admin-search-input" onkeyup="filterLogs()" placeholder="🔍 Search name..." style="width:100%; padding:10px; margin-bottom:10px;">
+  <table style="width:100%; background:white; border-collapse:collapse;">
+    <thead style="background:#eee;">
+      <tr><th style="padding:10px;">Name</th><th>Subject</th><th>Score</th><th>Status</th><th>Date</th></tr>
+    </thead>
+    <tbody id="admin-table-body"></tbody>
+  </table>
+  <div style="margin-top:10px; display:flex; justify-content:space-between;">
+    <button onclick="clearLogs()" style="color:red; border:none; background:none; cursor:pointer;">Clear All</button>
+    <div id="log-count">0 records</div>
   </div>
 </div>
 
 <div class="screen" id="screen-quiz">
-  <div class="app-header">
-    <div class="header-logo"><span class="logo-icon">🦁</span><h2>BrainBurst Academy</h2></div>
-    <div class="hdr-right"><div class="hdr-pill pill-score">⭐ <span id="quiz-hdr-score">0</span> pts</div></div>
-  </div>
-  <div class="quiz-wrapper">
-    <div class="progress-track"><div class="progress-fill" id="q-progress" style="width:0%"></div></div>
-    <div class="question-card" id="q-card">
-      <span class="diff-badge" id="q-diff">Easy</span>
-      <div class="question-text" id="q-text"></div>
-      <div class="options-grid" id="q-opts"></div>
-      <div class="feedback-area" id="q-fb"></div>
-      <button class="next-q-btn" id="next-btn" onclick="nextQuestion()">Next</button>
-    </div>
-  </div>
+    <h2 id="quiz-title">Quiz</h2>
+    <div id="q-text" style="font-size:1.2rem; margin-bottom:20px;"></div>
+    <div id="q-opts"></div>
+    <button id="next-btn" onclick="nextQuestion()" style="display:none; margin-top:20px;" class="btn-go">Next →</button>
 </div>
 
 <div class="screen" id="screen-result">
-  <div class="app-header">
-    <div class="header-logo"><span class="logo-icon">🦁</span><h2>BrainBurst Academy</h2></div>
-    <div class="hdr-right"><div class="hdr-pill pill-score">⭐ <span class="dyn-score">0</span> pts</div></div>
-  </div>
-  <div class="result-wrap">
-    <div class="result-card">
-      <span class="result-trophy" id="res-trophy">🏆</span>
-      <div class="result-subject-name" id="res-subj"></div>
-      <div class="result-pct" id="res-pct"></div>
-      <div class="result-verdict" id="res-verdict"></div>
-      <div class="result-stats">
-        <div class="rs-pill"><div class="rs-val" id="rs-correct"></div><div class="rs-label">CORRECT</div></div>
-        <div class="rs-pill"><div class="rs-val" id="rs-qpts"></div><div class="rs-label">PTS</div></div>
-      </div>
-      <div class="new-badges-area" id="new-badges-area"></div>
-      <div class="result-actions">
-        <button class="btn-retry" onclick="startQuiz()">🔁 Retry</button>
-        <button class="btn-outline" onclick="showScreen('screen-home')">🏠 Home</button>
-      </div>
+    <div style="text-align:center;">
+        <h1 id="res-pct" style="font-size:3rem;">0%</h1>
+        <p id="res-msg">Well done!</p>
+        <button class="btn-go" onclick="showScreen('screen-home')">🏠 Back Home</button>
     </div>
-  </div>
-</div>
-
-<div class="screen" id="screen-badges">
-  <div class="app-header">
-    <div class="header-logo"><span class="logo-icon">🦁</span><h2>BrainBurst Academy</h2></div>
-    <div class="hdr-right"><div class="hdr-pill pill-score">⭐ <span id="bdg-score">0</span> pts</div></div>
-  </div>
-  <div class="badges-content">
-    <button class="back-btn" onclick="showScreen('screen-home')">← Back</button>
-    <div class="bo-count"><span id="bdg-earned">0</span> / <span id="bdg-total">0</span> Badges</div>
-    <div class="badges-grid" id="badges-grid"></div>
-  </div>
-</div>
-
-<div class="screen" id="screen-admin">
-  <div class="app-header">
-    <div class="header-logo"><span class="logo-icon">🦁</span><h2>BrainBurst Academy</h2></div>
-    <div class="hdr-right"><button class="hdr-btn" onclick="showScreen('screen-home')">🏠 Back</button></div>
-  </div>
-  <div class="admin-content" style="padding:20px; max-width:900px; margin:0 auto;">
-    <h2 style="font-family:'Fredoka One'; color:#1F2937;">🎓 Student Logs</h2>
-    <div style="margin-bottom: 20px;">
-      <input type="text" id="admin-search-input" onkeyup="filterLogs()" placeholder="🔍 Search student name..." 
-             style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #E5E7EB; font-size: 1rem; outline:none;">
-    </div>
-    <div style="background:white; border-radius:15px; overflow:hidden; box-shadow:0 10px 25px rgba(0,0,0,0.1);">
-      <table style="width:100%; border-collapse: collapse; text-align: left;">
-        <thead style="background:#F3F4F6;">
-          <tr>
-            <th style="padding:15px;">Name</th>
-            <th style="padding:15px;">Subject</th>
-            <th style="padding:15px;">Score</th>
-            <th style="padding:15px;">Status</th>
-            <th style="padding:15px;">Date</th>
-          </tr>
-        </thead>
-        <tbody id="admin-table-body"></tbody>
-      </table>
-    </div>
-    <div style="display:flex; justify-content:space-between; margin-top:20px;">
-        <button onclick="clearLogs()" style="background:#EF4444; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer;">🗑️ Clear Logs</button>
-        <div id="log-count" style="font-weight:700; color:#6B7280;">0 records</div>
-    </div>
-  </div>
 </div>
 
 <script src="app.js"></script>
