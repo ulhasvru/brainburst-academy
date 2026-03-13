@@ -3,66 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="BrainBurst Academy – Interactive Grade 4 Learning Platform with Quizzes, Badges & Fun!">
-  <meta name="keywords" content="Grade 4, learning, quiz, CBSE, maths, science, english, hindi, kannada, computers">
-  <meta name="author" content="BrainBurst Academy">
-  <meta property="og:title" content="🌟 BrainBurst Academy – Grade 4 Learning">
-  <meta property="og:description" content="Learn. Play. Level Up! Quizzes, badges & brain-boosting fun for Grade 4 students.">
-  <meta property="og:type" content="website">
+  <meta name="description" content="BrainBurst Academy – Interactive Grade 4 Learning Platform">
   <title>🌟 BrainBurst Academy – Grade 4 Learning</title>
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <!-- Favicon -->
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="bg-canvas">
-  <div class="blob blob1"></div>
-  <div class="blob blob2"></div>
-  <div class="blob blob3"></div>
-  <div class="blob blob4"></div>
-  <div class="blob blob5"></div>
+  <div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div>
 </div>
 
 <div id="confetti-layer"></div>
 <div id="toast"></div>
 
-<!-- ============ WELCOME ============ -->
 <div class="screen active" id="screen-welcome">
   <div class="welcome-outer">
-    <div style="position:absolute;top:-28px;left:-20px;font-size:2.2rem;animation:decoFloatAnim 3s ease-in-out infinite alternate;">⭐</div>
-    <div style="position:absolute;top:-20px;right:10px;font-size:1.8rem;animation:decoFloatAnim 2.5s ease-in-out infinite alternate;animation-delay:0.8s;">🎈</div>
-    <div style="position:absolute;bottom:-24px;right:-18px;font-size:2rem;animation:decoFloatAnim 3.5s ease-in-out infinite alternate;animation-delay:1.2s;">🎉</div>
-    <div style="position:absolute;bottom:-20px;left:10px;font-size:1.6rem;animation:decoFloatAnim 4s ease-in-out infinite alternate;animation-delay:0.4s;">🌈</div>
     <div class="welcome-card">
       <span class="welcome-mascot">🦁</span>
       <h1>BrainBurst Academy!</h1>
-      <p class="subtitle">Learn. Play. Level Up! 🌟<br>Quizzes, badges & brain-boosting fun await you!</p>
-      <div class="welcome-tag">🎮 Grade 4 · 6 Subjects · 14 Badges to Collect!</div>
+      <p class="subtitle">Learn. Play. Level Up! 🌟</p>
       <input class="name-input" id="student-name-input" type="text" placeholder="What's your name, Superstar? ✏️" maxlength="30" />
       <div id="name-error" style="color:#DC2626;font-size:0.85rem;font-weight:700;margin-bottom:12px;display:none;">⚠️ Please enter your name to start!</div>
       <button class="btn-go" onclick="startApp()">🚀 Let's Blast Off!</button>
-      <div class="welcome-stickers">
-        <span class="sticker">📚</span>
-        <span class="sticker">🔢</span>
-        <span class="sticker">🌿</span>
-        <span class="sticker">💻</span>
-        <span class="sticker">🏆</span>
-      </div>
     </div>
   </div>
 </div>
 
-<!-- ============ HOME ============ -->
 <div class="screen" id="screen-home">
   <div class="app-header">
-    <div class="header-logo">
-      <span class="logo-icon">🦁</span>
-      <h2>BrainBurst Academy</h2>
-    </div>
+    <div class="header-logo"><span class="logo-icon">🦁</span><h2>BrainBurst Academy</h2></div>
     <div class="hdr-right">
+      <button class="hdr-btn" style="background:#6366F1;" onclick="showAdminDashboard()">📊 Logs</button>
       <div class="hdr-pill pill-name">👤 <span id="header-name">Explorer</span></div>
       <div class="hdr-pill pill-score">⭐ <span id="header-score">0</span> pts</div>
       <button class="hdr-btn" onclick="showScreen('screen-badges')">🏅 My Badges</button>
@@ -71,52 +42,33 @@
   <div class="home-content">
     <div class="home-greeting">
       <h2>Hey <span id="greeting-name"></span>! Ready to learn? 🎯</h2>
-      <p>Pick a subject below and start your adventure. Collect stars and earn amazing badges!</p>
     </div>
     <div class="progress-banner" id="home-progress-banner">
-      <span class="prog-label">🏆 Overall Progress</span>
       <div class="prog-bar-outer"><div class="prog-bar-inner" id="home-prog-bar" style="width:0%"></div></div>
       <span class="prog-count" id="home-prog-count">0 / 6 subjects</span>
     </div>
-    <div class="section-title">📚 Choose Your Subject</div>
     <div class="subjects-grid" id="subjects-grid"></div>
   </div>
 </div>
 
-<!-- ============ SUBJECT DETAIL ============ -->
 <div class="screen" id="screen-subject">
   <div class="app-header">
     <div class="header-logo"><span class="logo-icon">🦁</span><h2>BrainBurst Academy</h2></div>
-    <div class="hdr-right">
-      <div class="hdr-pill pill-score">⭐ <span class="dyn-score">0</span> pts</div>
-    </div>
+    <div class="hdr-right"><div class="hdr-pill pill-score">⭐ <span class="dyn-score">0</span> pts</div></div>
   </div>
   <div class="subject-detail">
-    <button class="back-btn" onclick="showScreen('screen-home')">← Back to Subjects</button>
+    <button class="back-btn" onclick="showScreen('screen-home')">← Back</button>
     <div class="subj-hero" id="subj-hero-bg">
       <span class="hero-icon" id="hero-icon"></span>
-      <div>
-        <h2 id="hero-name"></h2>
-        <p id="hero-desc"></p>
-      </div>
+      <div><h2 id="hero-name"></h2><p id="hero-desc"></p></div>
     </div>
-    <div style="font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--text-dark);margin-bottom:14px;">How do you want to learn? 🤔</div>
     <div class="choice-grid">
-      <div class="choice-card cc-read" onclick="showSyllabus()">
-        <div class="cc-icon">📖</div>
-        <h3>Read Syllabus First</h3>
-        <p>Study all the topics, understand the concepts, then conquer the quiz!</p>
-      </div>
-      <div class="choice-card cc-quiz" onclick="startQuiz()">
-        <div class="cc-icon">⚡</div>
-        <h3>Jump Into Quiz!</h3>
-        <p>Feeling brave? Test what you already know and see how you score!</p>
-      </div>
+      <div class="choice-card cc-read" onclick="showSyllabus()"><h3>📖 Read Syllabus</h3></div>
+      <div class="choice-card cc-quiz" onclick="startQuiz()"><h3>⚡ Jump Into Quiz</h3></div>
     </div>
   </div>
 </div>
 
-<!-- ============ SYLLABUS ============ -->
 <div class="screen" id="screen-syllabus">
   <div class="app-header">
     <div class="header-logo"><span class="logo-icon">🦁</span><h2>BrainBurst Academy</h2></div>
@@ -124,16 +76,12 @@
   </div>
   <div class="syllabus-content">
     <button class="back-btn" onclick="showScreen('screen-subject')">← Back</button>
-    <div style="margin-bottom:24px;">
-      <h2 id="syl-title" style="font-size:1.9rem;color:var(--text-dark);"></h2>
-      <p style="color:var(--text-mid);font-weight:600;margin-top:6px;">📋 Full Syllabus · Read carefully, then crush the quiz!</p>
-    </div>
+    <h2 id="syl-title"></h2>
     <div id="syl-body"></div>
-    <button class="quiz-launch-btn" onclick="startQuiz()">⚡ I'm Ready! Start the Quiz →</button>
+    <button class="quiz-launch-btn" onclick="startQuiz()">⚡ Start Quiz →</button>
   </div>
 </div>
 
-<!-- ============ QUIZ ============ -->
 <div class="screen" id="screen-quiz">
   <div class="app-header">
     <div class="header-logo"><span class="logo-icon">🦁</span><h2>BrainBurst Academy</h2></div>
@@ -141,21 +89,16 @@
   </div>
   <div class="quiz-wrapper">
     <div class="progress-track"><div class="progress-fill" id="q-progress" style="width:0%"></div></div>
-    <div class="quiz-topbar">
-      <span class="q-counter-pill" id="q-counter">Question 1 of 12</span>
-      <span class="q-score-pill">🔥 <span id="q-live">0</span> pts this quiz</span>
-    </div>
     <div class="question-card" id="q-card">
-      <span class="diff-badge diff-easy" id="q-diff">Easy</span>
+      <span class="diff-badge" id="q-diff">Easy</span>
       <div class="question-text" id="q-text"></div>
       <div class="options-grid" id="q-opts"></div>
       <div class="feedback-area" id="q-fb"></div>
-      <button class="next-q-btn" id="next-btn" onclick="nextQuestion()">Next →</button>
+      <button class="next-q-btn" id="next-btn" onclick="nextQuestion()">Next</button>
     </div>
   </div>
 </div>
 
-<!-- ============ RESULT ============ -->
 <div class="screen" id="screen-result">
   <div class="app-header">
     <div class="header-logo"><span class="logo-icon">🦁</span><h2>BrainBurst Academy</h2></div>
@@ -169,40 +112,61 @@
       <div class="result-verdict" id="res-verdict"></div>
       <div class="result-stats">
         <div class="rs-pill"><div class="rs-val" id="rs-correct"></div><div class="rs-label">CORRECT</div></div>
-        <div class="rs-pill"><div class="rs-val" id="rs-qpts"></div><div class="rs-label">QUIZ PTS</div></div>
-        <div class="rs-pill"><div class="rs-val" id="rs-total"></div><div class="rs-label">TOTAL PTS</div></div>
+        <div class="rs-pill"><div class="rs-val" id="rs-qpts"></div><div class="rs-label">PTS</div></div>
       </div>
       <div class="new-badges-area" id="new-badges-area"></div>
       <div class="result-actions">
-        <button class="btn-retry" onclick="startQuiz()">🔁 Try Again</button>
+        <button class="btn-retry" onclick="startQuiz()">🔁 Retry</button>
         <button class="btn-outline" onclick="showScreen('screen-home')">🏠 Home</button>
-        <button class="btn-outline" onclick="showScreen('screen-badges')">🏅 Badges</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ============ BADGES ============ -->
 <div class="screen" id="screen-badges">
   <div class="app-header">
     <div class="header-logo"><span class="logo-icon">🦁</span><h2>BrainBurst Academy</h2></div>
     <div class="hdr-right"><div class="hdr-pill pill-score">⭐ <span id="bdg-score">0</span> pts</div></div>
   </div>
   <div class="badges-content">
-    <button class="back-btn" onclick="showScreen('screen-home')">← Back to Home</button>
-    <div class="badges-overview">
-      <div class="bo-icon">🏅</div>
-      <div class="bo-text">
-        <h3>Your Trophy Room</h3>
-        <p>Complete quizzes and score high to unlock these awesome badges!</p>
-      </div>
-      <div class="bo-count"><span id="bdg-earned">0</span> / <span id="bdg-total">0</span></div>
-    </div>
+    <button class="back-btn" onclick="showScreen('screen-home')">← Back</button>
+    <div class="bo-count"><span id="bdg-earned">0</span> / <span id="bdg-total">0</span> Badges</div>
     <div class="badges-grid" id="badges-grid"></div>
   </div>
 </div>
 
-  <!-- Main App Script -->
-  <script src="app.js"></script>
+<div class="screen" id="screen-admin">
+  <div class="app-header">
+    <div class="header-logo"><span class="logo-icon">🦁</span><h2>BrainBurst Academy</h2></div>
+    <div class="hdr-right"><button class="hdr-btn" onclick="showScreen('screen-home')">🏠 Back</button></div>
+  </div>
+  <div class="admin-content" style="padding:20px; max-width:900px; margin:0 auto;">
+    <h2 style="font-family:'Fredoka One'; color:#1F2937;">🎓 Student Logs</h2>
+    <div style="margin-bottom: 20px;">
+      <input type="text" id="admin-search-input" onkeyup="filterLogs()" placeholder="🔍 Search student name..." 
+             style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #E5E7EB; font-size: 1rem; outline:none;">
+    </div>
+    <div style="background:white; border-radius:15px; overflow:hidden; box-shadow:0 10px 25px rgba(0,0,0,0.1);">
+      <table style="width:100%; border-collapse: collapse; text-align: left;">
+        <thead style="background:#F3F4F6;">
+          <tr>
+            <th style="padding:15px;">Name</th>
+            <th style="padding:15px;">Subject</th>
+            <th style="padding:15px;">Score</th>
+            <th style="padding:15px;">Status</th>
+            <th style="padding:15px;">Date</th>
+          </tr>
+        </thead>
+        <tbody id="admin-table-body"></tbody>
+      </table>
+    </div>
+    <div style="display:flex; justify-content:space-between; margin-top:20px;">
+        <button onclick="clearLogs()" style="background:#EF4444; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer;">🗑️ Clear Logs</button>
+        <div id="log-count" style="font-weight:700; color:#6B7280;">0 records</div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
